@@ -1,4 +1,3 @@
-from attr import field
 from ma import ma
 from marshmallow import fields
 

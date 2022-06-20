@@ -1,6 +1,7 @@
 from flask import request
 from flask_restplus import Resource, fields
 
+
 from models.user import User
 from schemas.user import UserSchema
 
@@ -12,7 +13,7 @@ app = server.app
 
 gallery_ns = server.gallery_ns
 
-gallery_schemy =  UserSchema()
+user_schemy =  UserSchema()
 gallery_list_scheme = UserSchema(many=True)
 
 ITEM_NOT_FOUND = 'User not found'
@@ -23,36 +24,35 @@ item = gallery_ns.model('User', {
   'password': fields.String(description='Password user')
 })
 
-@api.route('/user/<int:id>')
+@api.route('/user/<string:loguin>')
 class Users(Resource):
   
-  def get(self, id):
-    gallery_data = User.find_by_id(id), 200
+  def get(self, loguin):
+    gallery_data = User.query.get(loguin), 200
     if gallery_data:
-      return gallery_schemy.dump(gallery_data)
+      return user_schemy.dump(gallery_data)
     return {'message': ITEM_NOT_FOUND}, 404
 
 
   @gallery_ns.expect(item)
   @gallery_ns.doc('Update User')
-  def put(self, id):
-    # gallery_data =  User.find_by_id(id)
-    # gallery_json = request.get_json()
+  def put(self, loguin):
+    gallery_data =  User.query.filter(User.name == 'jhonat').first()
+    gallery_json = request.get_json()
 
-    # gallery_data.name = gallery_json['name']
-    # gallery_data.loguin = gallery_json['loguin']
-    # gallery_data.password = gallery_json['password']
+    gallery_data.name = gallery_json['name']
+    gallery_data.loguin = gallery_json['loguin']
+    gallery_data.password = gallery_json['password']
 
-    # gallery_data.save_to_db()
-    mark = User(name='jhonat', loguin='jhonat@gmail.com', password='1234')
-    mark.save()
-    return gallery_schemy.dump(mark), 200
+    gallery_data.save()
+    print(gallery_data.name)
+    return user_schemy.dump(gallery_data), 200
 
   @gallery_ns.doc('Delete User')
-  def delete(self, id):
-    gallery_data = User.find_by_id(id)
+  def delete(self, loguin):
+    gallery_data = User.query.filter(User.loguin == loguin).first()
     if (gallery_data):
-      gallery_data.delete_from_db()
+      gallery_data.remove()
       return '', 204
     return {'message': ITEM_NOT_FOUND}
 
@@ -63,10 +63,10 @@ class Users(Resource):
   @gallery_ns.doc('Create User')
   def post(self, ):
     gallery_json = request.get_json()
-    gallery_data = gallery_schemy.load(gallery_json)
-
-    gallere_data = gallery_data.save_to_db()
-    return gallery_schemy.dump(gallery_data), 201
+    gallery_data = user_schemy.load(gallery_json)
+    User(name=gallery_json['name'], loguin=gallery_json['loguin'], password=gallery_json['password']).save()
+    return user_schemy.dump(gallery_data), 201
 
   def get(self, ):
-    return gallery_schemy.dump(User.query), 200
+    print(User.get_indexes())
+    return user_schemy.dump(User.get_indexes), 200

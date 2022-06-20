@@ -15,7 +15,7 @@ class Server():
     self.db = None
 
     try:
-      self.app.config['MONGOALCHEMY_DATABASE'] = 'admin'
+      self.app.config['MONGOALCHEMY_DATABASE'] = 'Anchor'
       self.app.config['MONGOALCHEMY_USER'] = 'root'
       self.app.config['MONGOALCHEMY_PASSWORD'] = 'example'
     except:

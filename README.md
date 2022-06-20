@@ -3,17 +3,17 @@
 </h1>
 
 <h1 align="center">
-   🙂 <a href="#"> Digital image processing </a>
+   🙂 <a href="#"> Anchor Loans challenge </a>
 </h1>
 
 <h3 align="center">
-    image processing using the OpenCV library
+    API creation using Flask and FrontEnd with Vue.js, MongoDB Database
 </h3>
 
 <p align="center">
-  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/jhonatheberson/digital-image-processing?color=%2304D361">
+  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/jhonatheberson/Anchor-Loans-challenge?color=%2304D361">
 
-  <img alt="Repository size" src="https://img.shields.io/github/repo-size/jhonatheberson/digital-image-processing">
+  <img alt="Repository size" src="https://img.shields.io/github/repo-size/jhonatheberson/Anchor-Loans-challenge">
 
   <!-- <a href="https://www.twitter.com/jhonatheberson/">
     <img alt="Siga no Twitter" src="https://img.shields.io/twitter/url?url=https%3A%2F%2Fgithub.com%2Fjhonatheberson%2FREADME-ecoleta">
@@ -22,13 +22,13 @@
   <a href="https://github.com/jhonatheberson/easy-church/releases">
         <img alt="GitHub release" src="https://raster.shields.io/github/v/release/jhonatheberson/template.svg">
   </a>
-  <a href="https://github.com/jhonatheberson/digital-image-processing/commits/master">
-    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/jhonatheberson/digital-image-processing">
+  <a href="https://github.com/jhonatheberson/Anchor-Loans-challenge/commits/master">
+    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/jhonatheberson/Anchor-Loans-challenge">
   </a>
 
    <img alt="License" src="https://img.shields.io/badge/license-MIT-brightgreen">
-   <a href="https://github.com/jhonatheberson/digital-image-processing/stargazers">
-    <img alt="Stargazers" src="https://img.shields.io/github/stars/jhonatheberson/digital-image-processing?style=social">
+   <a href="https://github.com/jhonatheberson/Anchor-Loans-challenge/stargazers">
+    <img alt="Stargazers" src="https://img.shields.io/github/stars/jhonatheberson/Anchor-Loans-challenge?style=social">
   </a>
 
   <a href="https://github.com/jhonatheberson">
@@ -116,7 +116,7 @@ This project is divided into three parts:
 
 1. Backend (server folder)
 2. Frontend (web folder)
-3. Mobile (mobile folder)
+
 
 Both Frontend and Mobile need the Backend to be running to work.
 
@@ -131,13 +131,13 @@ In addition, it is good to have an editor to work with the code like [VSCode](ht
 ```bash
 
 # Clone this repository
-$ git clone git@github.com:jhonatheberson/README-ecoleta.git
+$ git clone git@github.com:jhonatheberson/Anchor-Loans-challenge.git
 
 # Access the project folder cmd/terminal
-$ cd README-ecoleta
+$ cd Anchor-Loans-challenge
 
 # go to the server folder
-$ cd server
+$ cd BakkEnd
 
 # install the dependencies
 $ npm install
@@ -150,7 +150,7 @@ $ npm run dev:server
 ```
 
 <p align="center">
-  <a href="https://github.com/jhonatheberson/digital-image-processing/blob/master/Insomnia_API_Ecoletajson.json" target="_blank"><img src="https://insomnia.rest/images/run.svg" alt="Run in Insomnia"></a>
+  <a href="https://github.com/jhonatheberson/Anchor-Loans-challenge/blob/master/Insomnia_API_Ecoletajson.json" target="_blank"><img src="https://insomnia.rest/images/run.svg" alt="Run in Insomnia"></a>
 </p>
 
 #### Running the web application (Frontend)

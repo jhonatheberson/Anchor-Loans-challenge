@@ -28,9 +28,9 @@ item = gallery_ns.model('User', {
 class Users(Resource):
   
   def get(self, loguin):
-    gallery_data = User.query.get(loguin), 200
+    gallery_data = User.query.filter(User.loguin==loguin).first(), 200
     if gallery_data:
-      return user_schemy.dump(gallery_data)
+      return user_schemy.dump(gallery_data[0])
     return {'message': ITEM_NOT_FOUND}, 404
 
 
@@ -68,5 +68,6 @@ class Users(Resource):
     return user_schemy.dump(gallery_data), 201
 
   def get(self, ):
-    print(User.get_indexes())
-    return user_schemy.dump(User.get_indexes), 200
+    user_data = User.query
+    print(user_data[0])
+    return gallery_list_scheme.dump(user_data), 200

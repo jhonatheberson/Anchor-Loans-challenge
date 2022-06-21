@@ -1,5 +1,6 @@
 from curses.ascii import US
 from flask import request, make_response, jsonify
+from jwt.exceptions import ExpiredSignatureError
 from flask_restplus import Resource, fields
 from  werkzeug.security import generate_password_hash, check_password_hash
 import jwt 
@@ -32,20 +33,23 @@ def token_required(f):
     @wraps(f) 
     def decorated(*args, **kwargs): 
       token = None
-      token = request.headers
+      token = request.headers['Authorization'].split(" ")[1]
       # if 'x-access-token' in request.headers: 
       #       token = request.headers['x-access-token'] 
       # if not token: 
       #       return jsonify({'message' : 'Token is missing !!'}), 401
       print('token', token)
-      
-      data = jwt.decode({token['Authorization']}, app.config['SECRET_KEY']) 
-      print('data', data)
+      try:
+        data = jwt.decode(token, app.config['SECRET_KEY'], algorithms=['HS256', ],) 
+        print('data', data)
+      except ExpiredSignatureError as error:
+        print(f'Unable to decode the token, error: {error}')
       current_user = User.query.filter(User.loguin == data['public_id']).first() 
-      print('current_user', current_user)
+      
+      print('current_user', user_schemy.dump(current_user))
       
           # return jsonify({'message' : 'Token is invalid !!'}), 401
-      return  f(current_user, *args, **kwargs) 
+      return  f(user_schemy.dump(current_user), *args, **kwargs) 
    
     return decorated 
 
@@ -76,7 +80,7 @@ class Sessions(Resource):
       token = jwt.encode({ 
             'public_id': user.loguin, 
             'exp' : datetime.utcnow() + timedelta(minutes = 30) 
-        }, app.config['SECRET_KEY']) 
+        }, app.config['SECRET_KEY'], algorithm='HS256') 
       return make_response(jsonify({'token' : token}), 201) 
 
     return make_response( 

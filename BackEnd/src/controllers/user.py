@@ -77,7 +77,7 @@ class Users(Resource):
     return user_schemy.dump(gallery_data), 201
   
   @token_required
-  def get(self, ):
+  def get(self, current_user):
     user_data = User.query
     print(user_data[0])
     return gallery_list_scheme.dump(user_data), 200

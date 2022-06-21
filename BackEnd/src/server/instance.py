@@ -14,6 +14,7 @@ class Server():
       self.app.config['MONGOALCHEMY_DATABASE'] = 'Anchor'
       self.app.config['MONGOALCHEMY_USER'] = 'root'
       self.app.config['MONGOALCHEMY_PASSWORD'] = 'example'
+      self.app.config['SECRET_KEY'] = 'your secret key'
     except:
       print("ERROR - Connot connect to db")
     self.gallery_ns = self.gallery_ns()

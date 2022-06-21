@@ -1,6 +1,7 @@
-from flask import request
+from flask import request, make_response
 from flask_restplus import Resource, fields
-
+from  werkzeug.security import generate_password_hash, check_password_hash
+from controllers.session import token_required
 
 from models.user import User
 from schemas.user import UserSchema
@@ -62,11 +63,20 @@ class Users(Resource):
   @gallery_ns.expect(item)
   @gallery_ns.doc('Create User')
   def post(self, ):
+    
     gallery_json = request.get_json()
     gallery_data = user_schemy.load(gallery_json)
-    User(name=gallery_json['name'], loguin=gallery_json['loguin'], password=gallery_json['password']).save()
-    return user_schemy.dump(gallery_data), 201
+    user = User.query.filter(User.loguin == gallery_json['loguin']).first() 
+    if not user: 
+      User(name=gallery_json['name'], loguin=gallery_json['loguin'], password=generate_password_hash(gallery_json['password'])).save()
 
+      return make_response('Successfully registered.'), 201
+    else: 
+      return make_response('User already exists. Please Log in.', 202)
+    
+    return user_schemy.dump(gallery_data), 201
+  
+  @token_required
   def get(self, ):
     user_data = User.query
     print(user_data[0])

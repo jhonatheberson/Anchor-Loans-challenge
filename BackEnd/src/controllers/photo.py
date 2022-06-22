@@ -16,8 +16,8 @@ app = server.app
 
 gallery_ns = server.gallery_ns
 
-user_schemy = PhotoSchema()
-gallery_list_scheme = PhotoSchema(many=True)
+photo_schemy = PhotoSchema()
+photo_list_scheme = PhotoSchema(many=True)
 user_schemy = UserSchema()
 
 ITEM_NOT_FOUND = 'Photo not found'
@@ -39,9 +39,6 @@ class ControllerPhotos(Resource):
 
     @token_required
     def get(self, current_user):
-        user = token_required()
-        current_user = user_schemy.dump(user)
-        print(current_user.email)
         user_data = Photo.query
         # print(user_data[0])
         return gallery_list_scheme.dump(user_data), 200
@@ -68,6 +65,9 @@ class ControllerPhoto(Resource):
         else:
             return make_response('Photo already exists.', 202)
 
+
+@api.route('/photo/approve')
+class ControllerPhoto(Resource):
     @gallery_ns.expect(itemPhoto)
     @gallery_ns.doc('approve Photo')
     @token_required
@@ -81,6 +81,27 @@ class ControllerPhoto(Resource):
 
         if photo:
             photo.approved = 1
+            photo.save()
+            return make_response('Approve photo', 200)
+        else:
+            return make_response('Photo not exists.', 202)
+
+
+@api.route('/photo/like')
+class ControllerPhoto(Resource):
+    @gallery_ns.expect(itemPhoto)
+    @gallery_ns.doc('approve Photo')
+    @token_required
+    def put(self, current_user):
+        user = get_token()
+        current_user = user_schemy.dump(user)
+        user_id = User.query.filter(
+            User.email == current_user['email']).first()
+        gallery_json = request.get_json()
+        photo = Photo.query.filter(Photo.url == gallery_json['url']).first()
+
+        if photo:
+            photo.likes = photo.likes+ 1
             photo.save()
             return make_response('Approve photo', 200)
         else:

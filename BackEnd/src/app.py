@@ -7,6 +7,7 @@ from db import db
 # adding controllers
 from controllers.user import *
 from controllers.session import *
+from controllers.photo import *
 
 from server.instance import server
 

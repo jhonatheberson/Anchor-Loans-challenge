@@ -2,7 +2,7 @@ from curses.ascii import US
 from flask import request, make_response, jsonify
 from jwt.exceptions import ExpiredSignatureError
 from flask_restplus import Resource, fields
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import check_password_hash
 import jwt
 from datetime import datetime, timedelta
 from functools import wraps
@@ -28,6 +28,18 @@ itemSession = gallery_ns.model('Session', {
     'password': fields.String(description='Password user')
 })
 
+def get_token():
+  token = None
+  token = request.headers['Authorization'].split(" ")[1]
+
+  try:
+      data = jwt.decode(
+          token, app.config['SECRET_KEY'], algorithms=['HS256', ],)
+  except ExpiredSignatureError as error:
+      return make_response('expired token', 401)
+  current_user = User.query.filter(
+      User.email == data['public_id']).first()
+  return current_user
 
 def token_required(f):
     @wraps(f)
@@ -45,7 +57,6 @@ def token_required(f):
             return make_response('expired token', 401)
         current_user = User.query.filter(
             User.email == data['public_id']).first()
-
         return f(user_schemy.dump(current_user), *args, **kwargs)
 
     return decorated

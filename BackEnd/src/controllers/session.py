@@ -23,7 +23,7 @@ gallery_list_scheme = UserSchema(many=True)
 
 ITEM_NOT_FOUND = 'User not found'
 
-itemSession = gallery_ns.model('User', {
+itemSession = gallery_ns.model('Session', {
     'email': fields.String(description='Loguin user'),
     'password': fields.String(description='Password user')
 })
@@ -33,20 +33,19 @@ def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
         token = None
-        token = request.headers['Authorization'].split(" ")[1]
-        print('token', token)
+        try:
+            token = request.headers['Authorization'].split(" ")[1]
+        except:
+            return make_response('Token is missing', 401)
+
         try:
             data = jwt.decode(
                 token, app.config['SECRET_KEY'], algorithms=['HS256', ],)
-            print('data', data)
         except ExpiredSignatureError as error:
-            print(f'Unable to decode the token, error: {error}')
+            return make_response('expired token', 401)
         current_user = User.query.filter(
-            User.loguin == data['public_id']).first()
+            User.email == data['public_id']).first()
 
-        print('current_user', user_schemy.dump(current_user))
-
-        # return jsonify({'message' : 'Token is invalid !!'}), 401
         return f(user_schemy.dump(current_user), *args, **kwargs)
 
     return decorated
@@ -54,8 +53,8 @@ def token_required(f):
 
 @api.route('/session/')
 class Sessions(Resource):
-    @gallery_ns.expect(itemSession)
     @gallery_ns.doc('user authentication')
+    @gallery_ns.expect(itemSession)
     def post(self, ):
         auth = request.get_json()
 
@@ -66,7 +65,7 @@ class Sessions(Resource):
                 {'WWW-Authenticate': 'Basic realm ="Login required !!"'}
             )
 
-        user = User.query.filter(User.loguin == auth['email']).first()
+        user = User.query.filter(User.email == auth['email']).first()
 
         if not user:
             return make_response(
@@ -77,7 +76,7 @@ class Sessions(Resource):
 
         if check_password_hash(user.password, auth['password']):
             token = jwt.encode({
-                'public_id': user.loguin,
+                'public_id': user.email,
                 'exp': datetime.utcnow() + timedelta(minutes=30)
             }, app.config['SECRET_KEY'], algorithm='HS256')
             return make_response(jsonify({'token': token}), 201)

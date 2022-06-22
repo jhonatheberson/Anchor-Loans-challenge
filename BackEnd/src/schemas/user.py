@@ -4,5 +4,6 @@ from marshmallow import fields
 
 class UserSchema(ma.Schema):
     name = fields.Str()
-    loguin = fields.Str()
+    email = fields.Str()
     password = fields.Str()
+    level = fields.Int()

@@ -59,7 +59,9 @@
 
 ## About
 
-🌌 Digital image processing - iis the study and application of image processing using [OpenCV](https://docs.opencv.org/master/index.html). with this library we will apply filters, recognize objects, count, among other things in the world of image processing.
+You got a request from a friend to create a gallery for his wedding where his friends will be able to upload their photos and he will have a unified gallery with all friend's photos.
+He wants to be able to approve the photos before being visible to everyone. He and his wife should be the only ones able to approve new photos.
+Users must be able to like photos and add comments to photos.
 
 ---
 
@@ -92,13 +94,13 @@ The application layout is available on Figma:
   <img alt="Made by jhonatheberson" src="https://img.shields.io/badge/Acessar%20Layout%20-Figma-%2304D361">
 </a>
 
-### Mobile
+<!-- ### Mobile
 
 <p align="center">
   <img alt="Ecoleta" title="#Ecoleta" src="./assets/home-mobile.png" width="200px">
 
   <img alt="Ecoleta" title="#Ecoleta" src="./assets/detalhes-mobile.svg" width="200px">
-</p>
+</p> -->
 
 ### Web
 
@@ -123,7 +125,7 @@ Both Frontend and Mobile need the Backend to be running to work.
 ### Pre-requisites
 
 Before you begin, you will need to have the following tools installed on your machine:
-[Git](https://git-scm.com), [Node.js](https://nodejs.org/en/).
+[Git](https://git-scm.com), [Flask](https://flask.palletsprojects.com/en/2.1.x/).
 In addition, it is good to have an editor to work with the code like [VSCode](https://code.visualstudio.com/)
 
 #### Rodando o Backend (servidor)
@@ -137,20 +139,30 @@ $ git clone git@github.com:jhonatheberson/Anchor-Loans-challenge.git
 $ cd Anchor-Loans-challenge
 
 # go to the server folder
-$ cd BakkEnd
+$ cd BackEnd
+
+# creating virtual environment
+$ python3 -m venv env
+
+# activating virtual environment
+$ source env/bin/activate
+
+# installing dependency
+$ pip install -r requirements.txt
+
 
 # install the dependencies
-$ npm install
+$ cd src
 
 # Run the application in development mode
-$ npm run dev:server
+$ python app.py
 
-# The server will start at port: 3333 - go to http://localhost:3333
+# The server will start at port: 5000 - go to http://0.0.0.0:5000/api/doc
 
 ```
 
 <p align="center">
-  <a href="https://github.com/jhonatheberson/Anchor-Loans-challenge/blob/master/Insomnia_API_Ecoletajson.json" target="_blank"><img src="https://insomnia.rest/images/run.svg" alt="Run in Insomnia"></a>
+  <a href="https://github.com/jhonatheberson/Anchor-Loans-challenge/blob/master/BackEnd/Insomnia-All.json" target="_blank"><img src="https://insomnia.rest/images/run.svg" alt="Run in Insomnia"></a>
 </p>
 
 #### Running the web application (Frontend)

@@ -8,6 +8,7 @@ from db import db
 from controllers.user import *
 from controllers.session import *
 from controllers.photo import *
+from controllers.comment import *
 
 from server.instance import server
 

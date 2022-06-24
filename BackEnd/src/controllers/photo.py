@@ -1,12 +1,12 @@
-from flask import request, make_response
+from flask import request, make_response, redirect, url_for
 from flask_restplus import Resource, fields
-from werkzeug.security import generate_password_hash
 from controllers.session import token_required, get_token
 
 from models.photo import Photo
 from models.user import User
 from schemas.photo import PhotoSchema
 from schemas.user import UserSchema
+from schemas.photoComment import photoCommentSchema
 
 
 from server.instance import server
@@ -16,6 +16,7 @@ app = server.app
 
 gallery_ns = server.gallery_ns
 
+photoComment_schemy = photoCommentSchema()
 photo_schemy = PhotoSchema()
 photo_list_scheme = PhotoSchema(many=True)
 user_schemy = UserSchema()
@@ -40,7 +41,30 @@ class ControllerPhotos(Resource):
     @token_required
     def get(self, current_user):
         user_data = Photo.query
+
         return photo_list_scheme.dump(user_data), 200
+        
+@api.route('/photoscommit/')
+class ControllerPhotos(Resource):
+
+    @token_required
+    def get(self, current_user):
+        user_data = Photo.query
+        photos = photo_list_scheme.dump(user_data)
+        print(photos)
+        photoComment_schemy.url = photos[0]['url']
+        photoComment_schemy.likes = photos[0]['likes']
+        photoComment_schemy.approved = photos[0]['approved']
+        request.args = {'url': photos[0]['url']}
+        # request.args.insert('url')
+        print(request.args)
+        url = request.args.get('url')
+        print(url)
+        responseredirect = redirect('http://localhost:5000/api/comments/')
+        print(responseredirect.get_data())
+        # print(photoComment_schemy.loads(photoComment_schemy))
+        response = photoComment_schemy.dump(photoComment_schemy)
+        return response, 200
 
 
 @api.route('/photo/')

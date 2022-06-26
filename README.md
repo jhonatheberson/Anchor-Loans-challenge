@@ -67,26 +67,20 @@ Users must be able to like photos and add comments to photos.
 
 ## Features
 
-- [x] Companies or entities can register on the web platform by sending:
+- [x] Users can register on the web platform by sending:
 
-  - [x] an image of the collection point
-  - [x] entity name, email and whatsapp
-  - [x] and the address so that it can appear on the map
-  - [x] in addition to selecting one or more collection items:
-    - lamps
-    - Batteries
-    - papers and cardboard
-    - electronic waste
-    - organic waste
-    - kitchen oil
 
-- [x] Users have access to the mobile application, where they can:
-  - [x] browse the map to see the registered institutions
-  - [x] contact the entity via E-mail or WhatsApp
+  - [x] entity name, email password, and level
+  - [x] user JWT authentication
+  - [x] photo creation
+  - [x] photo deletion
+  - [x] approve photo
+  - [x] add like on photo
+  - [x] add comments to photos
 
 ---
 
-## Layout
+<!-- ## Layout
 
 The application layout is available on Figma:
 
@@ -101,14 +95,14 @@ The application layout is available on Figma:
 
   <img alt="Ecoleta" title="#Ecoleta" src="./assets/detalhes-mobile.svg" width="200px">
 </p> -->
-
+<!-- 
 ### Web
 
 <p align="center" style="display: flex; align-items: flex-start; justify-content: center;">
   <img alt="Ecoleta" title="#Ecoleta" src="./assets/web.svg" width="400px">
 
   <img alt="Ecoleta" title="#Ecoleta" src="./assets/sucesso-web.svg" width="400px">
-</p>
+</p> --> 
 
 ---
 
@@ -117,10 +111,11 @@ The application layout is available on Figma:
 This project is divided into three parts:
 
 1. Backend (server folder)
-2. Frontend (web folder)
+<!-- 2. Frontend (web folder) -->
 
 
-Both Frontend and Mobile need the Backend to be running to work.
+Both Frontend need the Backend to be running to work.
+<!-- Both Frontend and Mobile need the Backend to be running to work. -->
 
 ### Pre-requisites
 
@@ -165,7 +160,7 @@ $ python app.py
   <a href="https://github.com/jhonatheberson/Anchor-Loans-challenge/blob/master/BackEnd/Insomnia-All.json" target="_blank"><img src="https://insomnia.rest/images/run.svg" alt="Run in Insomnia"></a>
 </p>
 
-#### Running the web application (Frontend)
+<!-- #### Running the web application (Frontend)
 
 ```bash
 
@@ -188,7 +183,7 @@ $ npm run start
 
 ```
 
----
+--- -->
 
 ## Tech Stack
 

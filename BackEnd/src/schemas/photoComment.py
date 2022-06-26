@@ -1,11 +1,15 @@
+# importing necessary modules
 from ma import ma
 from marshmallow import fields
-from schemas.comment import CommentSchema
 
 
 class photoCommentSchema(ma.Schema):
-        # fields = ('likes', 'approved', 'url', 'commits')
-    likes = fields.Int()
-    approved = fields.Int()
-    url = fields.Str()
-    commits = []
+  """Class responsible for serialization/deserialization the PhotoComment
+
+  Args:
+      ma ([marshmallow]): [serialization scheme]
+  """  
+  likes = fields.Int()
+  approved = fields.Int()
+  url = fields.Str()
+  commits = []

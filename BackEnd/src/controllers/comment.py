@@ -1,34 +1,29 @@
+# importing necessary modules
 from flask import request, make_response
 from flask_restplus import Resource, fields
-from werkzeug.security import generate_password_hash
-from controllers.session import token_required, get_token
-
+from controllers.session import token_required
+# importing models
 from models.comment import Comment
 from models.photo import Photo
-from models.user import User
+# importing models
 from schemas.comment import CommentSchema
 from schemas.photo import PhotoSchema
 
-
+# importing class server
 from server.instance import server
-
+# starting server modules
 api = server.api
 app = server.app
-
+# starting server namespace
 gallery_ns = server.gallery_ns
-
+# instantiating schemas
 photo_schemy = CommentSchema()
 comment_list_scheme = CommentSchema(many=True)
 photo_schemy = PhotoSchema()
-
+# standard messages
 ITEM_NOT_FOUND = 'Comment not found'
-
-item = gallery_ns.model('Comment', {
-    'photo_id': fields.String(description='photo who registered the Comment'),
-    'commit': fields.String(description='url Comment')
-})
-
-itemCommit = gallery_ns.model('itemCommit', {
+# template for documentation
+Commit = gallery_ns.model('Commit', {
     'commit': fields.String(description='Comment'),
     'url': fields.String(description='url Comment')
 })
@@ -39,6 +34,12 @@ class ControllerComments(Resource):
 
     @token_required
     def get(self, current_user):
+        """method that lists all commits
+
+
+        Returns:
+            [json]: [returns all commits]
+        """
         url = request.args.get('url')
         user_data = Comment.query.filter(Comment.photo_id.url == url)
         return comment_list_scheme.dump(user_data), 200
@@ -46,10 +47,16 @@ class ControllerComments(Resource):
 
 @api.route('/comment/')
 class ControllerComment(Resource):
-    @gallery_ns.expect(itemCommit)
+    @gallery_ns.expect(Commit)
     @gallery_ns.doc('Create Comment')
     @token_required
     def post(self, current_user):
+        """method create the commit
+
+
+        Returns:
+            [json]: [return success or failure message]
+        """
         body = request.get_json()
         print(body)
         photo = Photo.query.filter(
@@ -64,6 +71,12 @@ class ControllerComment(Resource):
     @token_required
     @gallery_ns.doc('Delete Comment')
     def delete(self, current_user):
+        """method delete the commit
+
+
+        Returns:
+            [json]: [return success or failure message]
+        """
         commit = request.args.get('commit')
         objCommit = Comment.query.filter(
             Comment.commit == commit).first()
@@ -71,9 +84,3 @@ class ControllerComment(Resource):
             objCommit.remove()
             return 'deleted Comment', 204
         return {'message': ITEM_NOT_FOUND}
-
-
-
-
-
-
